@@ -31,7 +31,11 @@ Component({
      commodity:{
        type:Object,
        value:{}
-     }
+     },
+    show_type:{
+      type:String,
+      value:'A'
+    }
     
   },
 
