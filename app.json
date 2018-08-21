@@ -32,6 +32,14 @@
     "pages/sfzheng/sfzheng",
     "pages/logs/logs"
   ],
+  "subPackages": [
+    {
+      "root": "grounpBuy",
+      "pages": [
+        "pages/grounpList/grounpList"
+      ]
+    }
+  ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

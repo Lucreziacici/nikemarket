@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 12,
+			"current": 13,
 			"list": [
 				{
 					"id": -1,
@@ -114,7 +114,7 @@
 					"id": 13,
 					"name": "商品详情",
 					"pathName": "pages/product/product",
-					"query": "id=87"
+					"query": "id=374"
 				},
 				{
 					"id": 23,
@@ -174,6 +174,12 @@
 					"id": -1,
 					"name": "画图",
 					"pathName": "pages/canvas/canvas",
+					"query": ""
+				},
+				{
+					"id": 24,
+					"name": "团购",
+					"pathName": "grounpBuy/pages/grounpList/grounpList",
 					"query": ""
 				}
 			]
