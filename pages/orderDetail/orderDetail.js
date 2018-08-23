@@ -38,7 +38,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // this.selectComponent("#Toast").showToast("123")
   },
   //获取数据
   getOrderDetail: function () {
@@ -122,9 +121,16 @@ Page({
       network.POST("Order/DeleteOrder", { order_no: this.data.order_no }, (res) => {
         console.log(res)
         if (res.data.res_status_code == '0') {
-          prevPage.getOrderList(this.data.activedStatus);
-          wx.hideLoading();
-          wx.navigateBack({})
+          if (this.data.activedStatus) {
+            prevPage.getOrderList(this.data.activedStatus);
+            wx.hideLoading();
+            wx.navigateBack({})
+          }else{
+            wx.redirectTo({
+              url: '../orderList/orderList',
+            })
+          }
+         
         }
       }, (res) => {
         console.log(res)
@@ -132,9 +138,15 @@ Page({
     } else if (this.data.operate == 'confirm') {
       network.POST("Order/ConfirmOrder", { order_no: this.data.order_no }, (res) => {
         if (res.data.res_status_code == '0') {
-          prevPage.getOrderList(this.data.activedStatus);
-          wx.hideLoading();
-          wx.navigateBack({})
+          if (this.data.activedStatus) {
+            prevPage.getOrderList(this.data.activedStatus);
+            wx.hideLoading();
+            wx.navigateBack({})
+          }else{
+            wx.redirectTo({
+              url: '../orderList/orderList',
+            })
+          }
         } else {
           this.selectComponent("#Toast").showToast(res.data.res_message);
         }
@@ -142,21 +154,33 @@ Page({
     } else if (this.data.operate == 'refund') {
       network.POST("Refund/CreateRefundOrder", { order_no: this.data.order_no }, (res) => {
         if (res.data.res_status_code == '0') {
-          console.log(res.data)
-          prevPage.getOrderList(this.data.activedStatus);
-          wx.hideLoading();
-          wx.navigateBack({})
+          if (this.data.activedStatus) {
+            prevPage.getOrderList(this.data.activedStatus);
+            wx.hideLoading();
+            wx.navigateBack({})
+          }else{
+            wx.redirectTo({
+              url: '../orderList/orderList',
+            })
+          }
+          
         } else {
           this.selectComponent("#Toast").showToast(res.data.res_message);
         }
       }, (res) => { console.log(res) })
     } else if (this.data.operate == 'cancel') {
       network.POST("Order/CancelOrder", { order_no: this.data.order_no }, (res) => {
-        console.log(res)
         if (res.data.res_status_code == '0') {
-          prevPage.getOrderList(this.data.activedStatus);
-          wx.hideLoading();
-          wx.navigateBack({})
+          if (this.data.activedStatus){
+            prevPage.getOrderList(this.data.activedStatus);
+            wx.hideLoading();
+            wx.navigateBack({})
+          }else{
+            wx.redirectTo({
+              url: '../orderList/orderList',
+            })
+          }
+         
         } else {
           this.selectComponent("#Toast").showToast(res.data.res_message);
         }
@@ -165,9 +189,15 @@ Page({
       network.POST("Refund/CancelRefund", { refund_no: this.data.order_no }, (res) => {
         console.log(res)
         if (res.data.res_status_code == '0') {
-          prevPage.getOrderList(this.data.activedStatus);
-          wx.hideLoading();
-          wx.navigateBack({})
+          if (this.data.activedStatus) {
+            prevPage.getOrderList(this.data.activedStatus);
+            wx.hideLoading();
+            wx.navigateBack({})
+          }else{
+            wx.redirectTo({
+              url: '../orderList/orderList',
+            })
+          }
         } else {
           this.selectComponent("#Toast").showToast(res.data.res_message);
         }

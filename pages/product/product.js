@@ -257,9 +257,13 @@ Page({
       cartdata.goods_id = this.data.product.goods_id;
       cartdata.spec_no = this.data.currentTab;
       cartdata.count = this.data.quantity;
+      wx.showLoading({
+        title: '生成订单中…',
+      })
       network.POST('Order/CreateOrderFromGoods', cartdata,
         (res) => {
           console.log(res)
+          wx.hideLoading();
           if (res.data.res_status_code == '0') {
             wx.navigateTo({
               url: '../final/final?order_no=' + res.data.res_content.order.order_no

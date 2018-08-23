@@ -44,9 +44,13 @@ Page({
   },
   //获取订单详情
   getOrderDetail:function(){
+    wx.showLoading({
+      title: '加载中…',
+    })
     network.GET('Order/OrderDetail?order_no=' + this.data.order_no,
       (res) => {
         console.log(res.data)
+        wx.hideLoading();
         if (res.data.res_status_code == '0') {
           this.setData({
             orderdetail_list: res.data.res_content.package_list,
@@ -148,9 +152,12 @@ Page({
         autonym: true
       })
     } else {
-     
+      wx.showLoading({
+        title: '生成订单中…',
+      })
       network.POST('OrderPay/AliOrderPay', { order_no: this.data.order_no },
         (res) => {
+          wx.hideLoading();
           if (res.data.res_status_code=='0'){
             this.setData({
               alipay: true
