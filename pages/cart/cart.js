@@ -1,6 +1,7 @@
 var app = getApp()
 var url = app.globalData.url
 var appid = app.globalData.appid
+var resourceurl = app.globalData.resourceurl
 var network = require("../../libs/network.js")
 Page({
   data: {
@@ -17,7 +18,7 @@ Page({
     cartvalues: [],//选中商品数组
     isApprove: false,//是否通过审核
     cart_ids:[],//选中商品ids数组
-    
+    resourceurl: resourceurl
   },
   onLoad: function (options) {
     wx.getStorage({
@@ -242,6 +243,7 @@ Page({
       data.cart_ids = this.data.cart_ids.join(",")
       wx.showLoading({
         title: '生成订单中…',
+        mask:true
       })
       network.POST('Order/CreateOrderFromCart',data,
         (res) => {

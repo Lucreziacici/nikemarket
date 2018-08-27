@@ -36,7 +36,8 @@
     {
       "root": "grounpBuy",
       "pages": [
-        "pages/grounpList/grounpList"
+        "pages/grounpList/grounpList",
+        "pages/sharepage/sharepage"
       ]
     }
   ],

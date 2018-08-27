@@ -3,6 +3,7 @@ var app = getApp()
 var url = app.globalData.url
 var appid = app.globalData.appid
 var title = app.globalData.title
+var resourceurl = app.globalData.resourceurl
 var opid = ""
 var network = require("../../libs/network.js")
 Page({
@@ -16,6 +17,7 @@ Page({
     onmsg: false,//判断是否为下订单时选择地址，数据从上个组件传来
     modalHidden: true,//控制模态框显示/隐藏
     addressId: 0,//地址id
+    resourceurl: resourceurl
   },
 
 

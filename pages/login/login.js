@@ -3,12 +3,14 @@
 var app = getApp()
 var url = app.globalData.url
 var appid = app.globalData.appid
+var resourceurl = app.globalData.resourceurl
 var network = require("../../libs/network.js")
 Page({
   data: {
     tip: '',//提示框内容
     radio1: true,//单选框
     openid: '',//openid
+    resourceurl: resourceurl
   },
   /**
    * 生命周期函数--监听页面加

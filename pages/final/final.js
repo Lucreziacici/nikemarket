@@ -1,6 +1,7 @@
 var app = getApp()
 var url = app.globalData.url
 var appid = app.globalData.appid
+var resourceurl = app.globalData.resourceurl
 var network = require("../../libs/network.js")
 var promise = require("../../libs/promise.util.js")
 
@@ -23,7 +24,9 @@ Page({
     team:{
       real_name:"",
       id_card:""
-    }
+    },
+    islayer: false,
+    resourceurl: resourceurl
   },
 
   onLoad: function (options) {
@@ -199,15 +202,37 @@ Page({
               wx.hideLoading();
             })
           }else{
-            this.selectComponent("#Toast").showToast(res.data.res_message);
+            if (res.data.res_status_code == '40030') {
+              this.setData({
+                tips: res.data.res_message,
+                islayer: true,
+                button: '前往付款'
+              })
+            } else {
+              this.setData({
+                tips: res.data.res_message,
+                islayer: true,
+                button: '去逛逛吧'
+              })
+            }
           }
-         
         }, (res) => {
           console.log(res);
         })
     }
     
    
+  },
+  goorderlist: function () {
+    if (this.data.button == '去逛逛吧') {
+      wx.redirectTo({
+        url: '../productList/productList'
+      })
+    } else {
+      wx.redirectTo({
+        url: '../orderList/orderList?status=00&id=1'
+      })
+    }
   },
   //保存到本地
   save: function () {
@@ -238,7 +263,6 @@ Page({
   },
   // 同步输入框里的值
   bindKeyInput:function(e){
-    console.log(e);
     if (e.currentTarget.dataset.type=='realname'){
       this.setData({
         team:{

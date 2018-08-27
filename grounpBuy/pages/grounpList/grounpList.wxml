@@ -89,7 +89,7 @@
     </navigator>
   </view>
   <view class='grounpItem'>
-    <navigator hover-class='none'>
+    <navigator  hover-class='none'>
       <view class='grounpItem_img'>
         <image mode="widthFix" src='http://cdn.mallimg.shjinjia.com.cn/Uploads/ShopGoods/134/QT049-e6c700e198f34794a93669834ecf497d.jpg'></image>
       </view>

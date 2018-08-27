@@ -9,11 +9,13 @@
   width: 750rpx;
   background: white;
 }
-
+.grounpList{
+  padding: 40rpx 32rpx 0 32rpx;
+}
 .grounpItem navigator {
   display: flex;
-  padding: 20rpx 32rpx;
-  border-bottom: 1px solid #f5f5f5;
+  padding: 20rpx 0;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .grounpItem_img image {

@@ -27,7 +27,7 @@ App({
       updateManager.onCheckForUpdate( (res)=> {
         console.log(res)
         // 请求完新版本信息的回调
-        if (!res.hasUpdate) {
+        if (res.hasUpdate) {
           updateManager.onUpdateReady((res) =>{
             console.log(res)
             wx.showModal({
@@ -111,13 +111,8 @@ App({
   },
   globalData: {
     url: 'https://fx.comeyang.com',
-    // appid: 'wx56cdb2dddcd85394',//appid需自己提供，此处的appid我随机编写  
-    // // secret: '37951450999e53b003be17fb540179e0',//secret需自己提供，此处的secret我随机编写 
-    // // partner: '1488718912',//商户号
-    // // partnerkey: 'LnFqv5I4LFGSDq3QjsNgUuI8x7jvs2Fo',//支付密钥
-    // title: 'ZIGGIE内购商城',
     userInfo: {},
     open_id: null,
-
+    resourceurl: 'http://cdn.mallimg.shjinjia.com.cn/Uploads/SysImages/134/',
   }
 })

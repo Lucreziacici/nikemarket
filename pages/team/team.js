@@ -2,6 +2,7 @@
 var app = getApp()
 var url = app.globalData.url
 var appid = app.globalData.appid
+var resourceurl = app.globalData.resourceurl
 var network = require("../../libs/network.js")
 Page({
   data: {
@@ -36,40 +37,41 @@ Page({
     orderlist: [
       {
         title: "待付款",
-        icon: "/images/obligation-icon.png",
-        status:'00',
-        id:1,
-        url:"/pages/orderList/orderList?status=00&id=1"
+        icon: resourceurl + "obligation-icon.png",
+        status: '00',
+        id: 1,
+        url: "/pages/orderList/orderList?status=00&id=1"
 
       }, {
         title: "待发货",
-        icon: "/images/receiving-icon.png",
+        icon: resourceurl + "receiving-icon.png",
         status: '10',
         id: 2,
         url: "/pages/orderList/orderList?status=10&id=2"
       },
       {
         title: "已发货",
-        icon: "/images/evaluated-icon.png",
+        icon: resourceurl + "evaluated-icon.png",
         status: '20',
         id: 3,
         url: "/pages/orderList/orderList?status=20&id=3"
       },
       {
         title: "已完成",
-        icon: "/images/order-icon.png",
+        icon: resourceurl + "order-icon.png",
         status: '30',
         id: 4,
         url: "/pages/orderList/orderList?status=30&id=4"
       },
       {
         title: "退款",
-        icon: "/images/refund-icon.png",
+        icon: resourceurl + "refund-icon.png",
         status: '90',
         id: 5,
         url: "/pages/refundOrder/refundOrder"
       }
-    ]
+    ],
+    resourceurl: resourceurl
   },
 
   /**

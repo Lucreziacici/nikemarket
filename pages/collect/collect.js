@@ -2,6 +2,7 @@
 var app = getApp()
 var url = app.globalData.url
 var appid = app.globalData.appid;
+var resourceurl = app.globalData.resourceurl
 import Watch from '../../libs/watch';
 var network = require("../../libs/network.js")
 let watch;
@@ -11,28 +12,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    productList: [{
-        id: 0,
-        goods_id: 35,
-        shop_id: 5,
-        goods_no: null,
-        goods_name: "BS RAFRA 修复AC精华液 30ml",
-        summary: null,
-      },
-      {
-        id: 0,
-        goods_id: 62,
-        shop_id: 5,
-        goods_no: null,
-      },
-      {
-        id: 0,
-        goods_id: 34,
-        shop_id: 5,
-        goods_no: null,
-        goods_name: "BS RAFRA 香橙防晒喷雾 ESSENCE UV MIST 100g",
-      }
-    ],
+    productList: [],
     activedTab:0,
     tabList: [{
       title: '商品'
@@ -40,7 +20,8 @@ Page({
         title: '品牌'
     }], //tab值
     noresult:false,
-    noresult2:false
+    noresult2:false,
+    resourceurl: resourceurl
   },
 
   /**
