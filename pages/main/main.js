@@ -12,7 +12,7 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     imgUrls: [],
-    navigation: [],
+    navigation_list: [],
     special: [
     ],
     page:{},
@@ -46,13 +46,17 @@ Page({
      
     })
     network.GET("HomePage/RequestHomePage",(res)=>{
-      if (res.data.res_content.page.category_show_type=='A'){
+      if (res.data.res_content.page.category_show_type == 'A'){
         for (var i = 0; i < res.data.res_content.recommend.length; i++) {
           res.data.res_content.recommend[i].category_goods_list = res.data.res_content.recommend[i].category_goods_list.slice(0, 6)
         }
       } else if (res.data.res_content.page.category_show_type == 'B'){
         for (var i = 0; i < res.data.res_content.recommend.length; i++) {
-          res.data.res_content.recommend[i].category_goods_list = res.data.res_content.recommend[i].category_goods_list.slice(0, 5)
+          res.data.res_content.recommend[i].category_goods_list = res.data.res_content.recommend[i].category_goods_list.slice(0, 8)
+        }
+      } else if (res.data.res_content.page.category_show_type == 'C') {
+        for (var i = 0; i < res.data.res_content.recommend.length; i++) {
+          res.data.res_content.recommend[i].category_goods_list = res.data.res_content.recommend[i].category_goods_list.slice(0, 6)
         }
       }
       wx.setNavigationBarColor({
@@ -62,7 +66,8 @@ Page({
       this.setData({
         imgUrls: res.data.res_content.banner,
         special: res.data.res_content.recommend,
-        page:res.data.res_content.page
+        page:res.data.res_content.page,
+        navigation_list: res.data.res_content.navigation_list
       })
     },(res)=>{
       console.log(res)

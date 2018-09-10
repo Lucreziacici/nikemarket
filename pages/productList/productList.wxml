@@ -16,7 +16,7 @@
       <text>价格</text>
       <image src='{{price_active_img}}'></image>
     </view>
-    <view bindtap='orderby' id="3" data-rank="desc" data-column="sales_volume" class=" {{currentTab==3 ? 'active' : ''}}">
+    <view bindtap='orderby' id="3" data-rank="desc" data-column="history_volume" class=" {{currentTab==3 ? 'active' : ''}}">
       <text>销量</text>
     </view>
     <view bindtap='openchoosefilter'>

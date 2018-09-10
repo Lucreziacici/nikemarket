@@ -37,9 +37,11 @@
       "root": "grounpBuy",
       "pages": [
         "pages/grounpList/grounpList",
-        "pages/sharepage/sharepage"
+        "pages/sharepage/sharepage",
+        "pages/grounprules/grounprules"
       ]
     }
+    
   ],
   "window": {
     "backgroundTextStyle": "light",

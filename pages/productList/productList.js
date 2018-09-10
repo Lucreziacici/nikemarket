@@ -19,6 +19,7 @@ Page({
     order_column: "",//排序字段 show_price
     order_sord: "asc",//正序asc，倒序desc
     category_id: "",//子分类id
+    big_category_id:"",//大分类id
     price_active_img: resourceurl + "arrow_gray.png",
     nomore: false,//是否加载到底
     noresult: false,
@@ -55,6 +56,11 @@ Page({
         category_id: options.category_id
       })
     }
+    if (options.big_category_id){
+      this.setData({
+        big_category_id: options.big_category_id
+      })
+    }
     network.GET("Brand/BrandList", (res) => {
       if (res.data.res_status_code == '0') {
         for (var i = 0; i < res.data.res_content.length; i++) {
@@ -75,6 +81,7 @@ Page({
     getdata.key_word = this.data.key_word;
     getdata.brand_code = this.data.brand_code;
     getdata.category_id = this.data.category_id;
+    getdata.big_category_id = this.data.big_category_id;
     getdata.page_index = this.data.page_index;
     getdata.page_size = this.data.page_size;
     getdata.order_column = this.data.order_column;

@@ -30,10 +30,10 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 12,
+			"current": -1,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "先加一个首页",
 					"pathName": "pages/main/main",
 					"query": ""
@@ -135,10 +135,10 @@
 					"query": "brand_code=B00025"
 				},
 				{
-					"id": 26,
+					"id": 17,
 					"name": "商品列表",
 					"pathName": "pages/productList/productList",
-					"query": "id=38"
+					"query": "big_category_id=80"
 				},
 				{
 					"id": -1,
@@ -186,6 +186,12 @@
 					"id": -1,
 					"name": "分享页面",
 					"pathName": "grounpBuy/pages/sharepage/sharepage",
+					"query": ""
+				},
+				{
+					"id": 27,
+					"name": "团购规则",
+					"pathName": "grounpBuy/pages/grounprules/grounprules",
 					"query": ""
 				}
 			]

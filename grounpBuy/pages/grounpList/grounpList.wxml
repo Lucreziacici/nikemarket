@@ -1,10 +1,9 @@
 <view class='tab'>
-  <view>一人团</view>
-  <view>老带新</view>
+  <view wx:for="{{Tab}}" wx:for-index="idx" wx:key="id" class="{{activedTab==idx?'tab-active':''}}"  data-id="{{idx}}" bindtap='switchTab'>{{item.title}}</view>
 </view>
 <view class='grounpList'>
   <view class='grounpItem'>
-    <navigator hover-class='none'>
+    <navigator hover-class='none' url='../../../pages/product/product?id=523'>
       <view class='grounpItem_img'>
         <image mode="widthFix" src='http://cdn.mallimg.shjinjia.com.cn/Uploads/ShopGoods/134/QT049-e6c700e198f34794a93669834ecf497d.jpg'></image>
       </view>
@@ -19,7 +18,7 @@
     </navigator>
   </view>
   <view class='grounpItem'>
-    <navigator hover-class='none'>
+    <navigator hover-class='none' url='../../../pages/product/product?id=523'>
       <view class='grounpItem_img'>
         <image mode="widthFix" src='http://cdn.mallimg.shjinjia.com.cn/Uploads/ShopGoods/134/QT049-e6c700e198f34794a93669834ecf497d.jpg'></image>
       </view>
@@ -33,7 +32,7 @@
     </navigator>
   </view>
   <view class='grounpItem'>
-    <navigator hover-class='none'>
+    <navigator hover-class='none' url='../../../pages/product/product?id=523'>
       <view class='grounpItem_img'>
         <image mode="widthFix" src='http://cdn.mallimg.shjinjia.com.cn/Uploads/ShopGoods/134/QT049-e6c700e198f34794a93669834ecf497d.jpg'></image>
       </view>

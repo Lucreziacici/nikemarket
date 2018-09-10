@@ -8,8 +8,8 @@ Page({
    */
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    Tab:[{title:"一人团"},{title:"老带新"}],
-    activedTab:0
+    Tab: [{ title: "一人团" }, { title: "老带新" }],
+    activedTab: 0
   },
 
   /**
@@ -31,7 +31,7 @@ Page({
   },
   // 切换tab
   switchTab: function (option) {
-    
+
     this.setData({
       activedTab: option.target.dataset.id.toString()
     })

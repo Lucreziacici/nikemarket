@@ -9,9 +9,20 @@
   width: 750rpx;
   background: white;
 }
-.grounpList{
+
+.tab view {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.tab-active {
+  color: #9c855c;
+}
+.grounpList {
   padding: 40rpx 32rpx 0 32rpx;
 }
+
 .grounpItem navigator {
   display: flex;
   padding: 20rpx 0;
@@ -29,6 +40,7 @@
   flex-direction: column;
   justify-content: space-around;
 }
+
 
 .grounpItem_title {
   font-size: 10pt;

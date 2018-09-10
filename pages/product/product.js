@@ -367,7 +367,7 @@ Page({
       // 来自页面内转发按钮
     }
     return {
-      title: this.data.product.title,
+      title: this.data.product.goods_name,
       path: 'pages/product/product?id=' + options.id,
       imageUrl: this.data.product.main_image,
       success: function(res) {

@@ -16,6 +16,10 @@
         </swiper-item>
       </block>
     </swiper>
+    <!-- 团购信息 -->
+    <!-- <view class='group_message'>
+       <view><text  decode="{{true}}" space="{{true}}" >2人团&nbsp;&nbsp;·&nbsp;&nbsp;距结束</text><text>43天</text>:<text>43时</text>:<text>43分</text></view>
+    </view> -->
     <view class='share'>
 
       <image src='{{resourceurl}}share.png'></image>
@@ -31,8 +35,17 @@
       <view class='commodity_price_item'>
         <view class='commodityprice'>
           <view class='commodity-price'>￥{{activeprice}}</view>
-          <view wx:if="{{product.intax=='1'&&product.inbond=='1'}}" class='tax'>包税</view>
-          <view wx:if="{{product.intax=='0'&&product.inbond=='1'}}" class='tax'>税费：￥{{tax}}</view>
+          <view wx:if="{{product.intax=='1'&&product.inbond=='1'}}" class='tax'>
+            <text>包税</text>
+            <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;全场满299包邮</text>
+          </view>
+          <view wx:elif="{{product.intax=='0'&&product.inbond=='1'}}" class='tax'>
+            <text>税费：￥{{tax}}</text>
+            <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;全场满299包邮</text>
+          </view>
+          <view wx:else class='tax'>
+            <text decode="{{true}}" space="{{true}}">全场满299包邮</text>
+          </view>
         </view>
         <view class='collect_item'>
           <view class='collect_item_cell' bindtap='collect'>
@@ -45,6 +58,9 @@
       </view>
 
     </view>
+    <!-- 拼团规则 -->
+    <!-- <view class='rules'><navigator url='../../grounpBuy/pages/grounprules/grounprules'><text>拼团规则</text><image src="{{resourceurl}}8.png"></image></navigator></view> -->
+
     <!--商品信息  -->
     <view class="white commodity-info">
       <view class='commodity-info-title'>商品信息</view>
@@ -53,15 +69,19 @@
           <text>品牌：</text>
           <text>{{product.brand_name}}</text>
         </view>
-        <view class=" commodity-info-item">
+        <!-- <view class=" commodity-info-item">
           <text>发货时间：</text>
           <text>1-3个工作日</text>
         </view>
         <view wx:if="{{active.alias_name}}" class="commodity-info-item">
           <text>发货地：</text>
           <text>{{active.alias_name}}</text>
+        </view> -->
+        <view wx:if="{{!Buystate}}" class="commodity-info-item" data-type='2'>
+          <text>选择规格</text>
+          <image src="{{resourceurl}}8.png"></image>
         </view>
-        <view class="commodity-info-item" data-type='2' bindtap="{{!Buystate?'':'onChangeShowState'}}">
+        <view wx:else class="commodity-info-item" data-type='2' bindtap="onChangeShowState">
           <text>选择规格</text>
           <image src="{{resourceurl}}8.png"></image>
         </view>
@@ -152,7 +172,7 @@
       <view class="main-message">
         <text class="main-message-price">￥{{activeprice}}</text>
         <text class="main-message-title">{{product.brand_name}}</text>
-        <text class="main-message-repertory">库存：{{repertory}}件</text>
+        <text class="main-message-repertory">库存：{{repertory?repertory:'0'}}件</text>
       </view>
     </view>
     <view class='cover-body'>
@@ -160,7 +180,7 @@
         <view class='message-box-title'>选择规格</view>
         <view class='message-box-specification'>
           <view class="guige-body1-rudio" wx:for="{{product.spec_list}}" wx:key="i" wx:for-index="i">
-            <view class="specification-button specification-{{currentTab==item.spec_no ? 'actived' : 'unactivated'}}" data-id="{{item.spec_no}}" data-bianma="{{item.spec_name}}" data-price="{{item.price}}" data-tax="{{item.tax}}" data-repertory="{{item.stock_count}}"
+            <view class="specification-button {{item.stock_count==0?'nocount':''}}  specification-{{currentTab==item.spec_no ? 'actived' : 'unactivated'}}" data-id="{{item.spec_no}}" data-bianma="{{item.spec_name}}" data-price="{{item.price}}" data-tax="{{item.tax}}" data-repertory="{{item.stock_count}}"
               data-name="{{item.spec_name}}" catchtap="{{item.stock_count>0 ? 'rudioChoose' : 'soldout'}}">
               <text class="rudio-text1">{{item.spec_name}}</text>
             </view>

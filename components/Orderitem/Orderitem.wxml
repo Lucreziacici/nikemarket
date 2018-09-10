@@ -48,7 +48,7 @@
       <text bindtap='refundOrder' wx:if="{{(order.status=='10'&&order.refund_status=='00')}}" data-id='{{order.order_no}}'>退款</text>
       <text bindtap='checkLogistics' wx:if="{{order.status=='20'||order.status=='21'||order.status=='30'}}" data-id="{{order.order_no}}">查看物流</text>
 
-      <text bindtap='confirmOrder' wx:if="{{order.status=='20'||order.status=='21'}}" data-id="{{order.order_no}}">确认收货</text>
+      <text bindtap='confirmOrder' wx:if="{{order.status=='20'}}" data-id="{{order.order_no}}">确认收货</text>
 
       <text bindtap='deleteOrder' wx:if="{{order.status=='30'||order.status=='40'||order.status=='90'}}" data-id='{{order.order_no}}'>删除订单</text>
 

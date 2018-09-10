@@ -26,29 +26,32 @@
   border-radius: 100%;
   padding: 20rpx;
   border: 1px solid #aaa;
-  text-align:center;
+  text-align: center;
 }
-.share button{
+
+.share button {
   width: 50rpx;
   height: 50rpx;
   opacity: 0;
   margin-top: -50rpx;
 }
-.share image{
+
+.share image {
   width: 50rpx;
   height: 50rpx;
 }
+
 page {
   background: #e7e7e7;
 }
 
 .commodity-box {
-  /* height: 1150rpx; */
-  /* overflow-y: auto; */
-    opacity: 0;  
+  /* height: 1150rpx; *//* overflow-y: auto; */
+  opacity: 0;
 }
-.commodity-box_active{
-   opacity: 1; 
+
+.commodity-box_active {
+  opacity: 1;
 }
 
 .commodity-swiper {
@@ -94,8 +97,9 @@ page {
   margin: 20rpx 0 0 0;
   padding: 30rpx;
 }
-.commodity-info:nth-last-child(1){
-  padding:30rpx 30rpx 100rpx 30rpx;
+
+.commodity-info:nth-last-child(1) {
+  padding: 30rpx 30rpx 100rpx 30rpx;
 }
 
 .commodity-info-title {
@@ -138,12 +142,14 @@ page {
   justify-content: space-around;
   align-items: center;
 }
-.commodity_price_item{
+
+.commodity_price_item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
+
 .collect_item_cell image {
   width: 50rpx;
   height: 50rpx;
@@ -174,6 +180,7 @@ contact-button {
 }
 
 .tax {
+  display: flex;
   font-size: 8pt;
   color: #aaa;
 }
@@ -362,7 +369,6 @@ contact-button {
 .message-box {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 20rpx 0;
-  
 }
 
 .message-box-title {
@@ -399,7 +405,11 @@ contact-button {
   background-color: #f5f5f5;
   color: #555;
 }
-
+.nocount {
+  border: 1px solid #f5f5f5;
+  background-color: #f5f5f5;
+  color: #9f9f9f;
+}
 .message-num {
   display: flex;
   justify-content: space-between;
@@ -456,8 +466,58 @@ contact-button {
 }
 
 .commodity_list {
-  margin:0 0 120rpx 0;
+  margin: 0 0 120rpx 0;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+}
+
+.group_message {
+  background: #e43e41;
+  padding: 25rpx 28rpx;
+  color: white;
+  font-size: 10pt;
+}
+
+.group_message text:nth-child(2) {
+  color: #212121;
+  background-color: #fff;
+  padding: 5rpx 12rpx;
+  border-radius: 10rpx;
+  margin: 0 15rpx;
+}
+
+.group_message text:nth-child(3) {
+  color: #212121;
+  background-color: #fff;
+  padding: 5rpx 12rpx;
+  border-radius: 10rpx;
+  margin: 0 15rpx;
+}
+
+.group_message text:nth-child(4) {
+  color: #212121;
+  background-color: #fff;
+  padding: 5rpx 12rpx;
+  border-radius: 10rpx;
+  margin: 0 15rpx;
+}
+
+.rules {
+  background: white;
+  font-size: 10pt;
+}
+
+.rules navigator {
+  padding: 10rpx 32rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70rpx;
+  margin: 20rpx 0 0 0;
+}
+
+.rules image {
+  width: 14rpx;
+  height: 20rpx;
 }

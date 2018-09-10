@@ -27,13 +27,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
     this.setData({
       classify: true
     })
@@ -42,38 +35,17 @@ Page({
         this.setData({
           classifyList: res.data.res_content
         })
-        if (this.data.chooseTabId){
-          if (this.data.currentTabName == '品牌导航'){
-            network.GET("Brand/BrandList", (res) => {
-              if (res.data.res_status_code == '0') {
-                this.setData({
-                  classifyitem: res.data.res_content,
-                  classify: false
-                })
-                wx.hideLoading()
-              } else {
-                this.selectComponent("#Toast").showToast(res.data.res_message)
-              }
-            }, (res) => {
-              console.log(res)
+        if (this.data.chooseTabId) {
+          if (this.data.currentTabName == '品牌导航') {
+            this.setData({
+              classify: false
             })
-          }else{
-            network.GET("Category/CategoryList?id=" + this.data.chooseTabId, (res) => {
-              if (res.data.res_status_code == '0') {
-                this.setData({
-                  classifyitem: res.data.res_content,
-                  classify: true
-                })
-                wx.hideLoading()
-              } else {
-                this.selectComponent("#Toast").showToast(res.data.res_message)
-              }
-
-            }, (res) => {
-              console.log(res)
+          } else {
+            this.setData({
+              classify: true
             })
           }
-        }else{
+        } else {
           network.GET("Category/CategoryList?id=" + res.data.res_content[0].id, (res) => {
             if (res.data.res_status_code == '0') {
               this.setData({
@@ -86,11 +58,18 @@ Page({
             console.log(res)
           })
         }
-       
+
       }
     }, (res) => {
       console.log(res)
     })
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    
   },
 
   /**
