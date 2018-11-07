@@ -218,5 +218,13 @@ Page({
     wx.setClipboardData({
       data: this.data.order_no,
     })
+  },
+  //更换身份证信息
+  chooseidcard:function(e){
+    console.log(e)
+    network.PostFormId(e.detail.formId);
+    wx.navigateTo({
+      url: '../idcardList/idcardList?oid='+e.currentTarget.dataset.id+'&onmsg='+true
+    })
   }
 })

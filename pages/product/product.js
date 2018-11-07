@@ -24,10 +24,16 @@ Page({
     isApprove: false,
     Buystate: false, //是否能购买
     userid: "", //用户id
-    // tax:0,//商品税费
+    discount_type: "0",//团购类型
+    discount_price: 0,//团购价格
+    original: 0,//原始价格
+    Isseckill_flag: false, //是否为秒杀活动
+    Iscount: false, //是否在倒计时
+    counttime: {}, //倒计时
+    time: 0,
     resourceurl: resourceurl
   },
-  onLoad: function(options) {
+  onLoad: function (options) {
     app.getUserInfo((userInfo, open_id) => {
       //更新数据
       console.log(userInfo)
@@ -40,9 +46,9 @@ Page({
       }
       //action_flag 0:未审核，1：已审核
       // if (userInfo.action_flag == 1) {
-        this.setData({
-          isApprove: true
-        })
+      this.setData({
+        isApprove: true
+      })
       // }
     })
     wx.getStorage({
@@ -51,12 +57,9 @@ Page({
         this.setData({
           team: res.data
         })
-        //action_flag 0:未审核，1：已审核
-        // if (res.data.action_flag == 1) {
-          this.setData({
-            isApprove: true
-          })
-        // }
+        this.setData({
+          isApprove: true
+        })
       },
     })
     this.setData({
@@ -64,7 +67,7 @@ Page({
     })
 
   },
-  onReady: function() {
+  onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
     this.ShopGoodsDetail();
   },
@@ -72,7 +75,7 @@ Page({
    * 生命周期函数--监听页面显示
    * 顺便获取页面高度
    */
-  onShow: function() {
+  onShow: function () {
     wx.getSystemInfo({
       success: (res) => {
         this.setData({
@@ -81,14 +84,14 @@ Page({
       }
     })
   },
-  ShopGoodsDetail:function(){
+  formSubmit: function (e) {
+    network.PostFormId(e.detail.formId);
+  },
+  ShopGoodsDetail: function () {
     //获取商品信息
-    network.GET("ShopGoods/ShopGoodsDetail?shop_id=1&goods_id=" + this.data.productId, (res) => {
+    network.GET("ShopGoods/ShopGoodsDetail?goods_id=" + this.data.productId, (res) => {
       console.log(res)
       if (res.data.res_status_code == '0') {
-        // this.setData({
-          
-        // })
         var animTranspond = wx.createAnimation({
           duration: 500,
           timingFunction: 'ease-out'
@@ -98,6 +101,12 @@ Page({
           animTranspond: animTranspond.export(),
           product: res.data.res_content
         })
+        if (res.data.res_content.seckill_flag == "Y") {
+          this.setData({
+            Isseckill_flag: true
+          })
+          this.counttime();
+        }
         for (var i = 0; i < res.data.res_content.spec_list.length; ++i) {
           if (res.data.res_content.spec_list[i].stock_count > 0) {
             this.setData({
@@ -106,22 +115,26 @@ Page({
               currentTab: res.data.res_content.spec_list[i].spec_no,
               repertory: res.data.res_content.spec_list[i].stock_count,
               active: res.data.res_content.spec_list[i],
-              Buystate: true
+              Buystate: true,
+              discount_type: res.data.res_content.spec_list[i].discount_type,
             });
             if (res.data.res_content.intax == '0' && res.data.res_content.inbond == '1') {
 
               this.setData({
-                activeprice: res.data.res_content.spec_list[i].price,
+                discount_price: res.data.res_content.spec_list[i].discount_price,
+                original: res.data.res_content.spec_list[i].total_price,
                 tax: res.data.res_content.spec_list[i].tax
               });
-            } else if (res.data.res_content.intax == '1' && res.data.res_content.inbond == '1'){
+            } else if (res.data.res_content.intax == '1' && res.data.res_content.inbond == '1') {
               var price = (res.data.res_content.spec_list[i].price + res.data.res_content.spec_list[i].tax).toFixed(2);
               this.setData({
-                activeprice: price
+                discount_price: res.data.res_content.spec_list[i].discount_price,
+                original: res.data.res_content.spec_list[i].total_price,
               });
-            } else if (res.data.res_content.inbond == '0'){
+            } else if (res.data.res_content.inbond == '0') {
               this.setData({
-                activeprice: res.data.res_content.spec_list[i].price,
+                discount_price: res.data.res_content.spec_list[i].discount_price,
+                original: res.data.res_content.spec_list[i].total_price,
               });
             }
             break;
@@ -129,17 +142,20 @@ Page({
             if (res.data.res_content.intax == '0' && res.data.res_content.inbond == '1') {
 
               this.setData({
-                activeprice: res.data.res_content.spec_list[i].price,
+                discount_price: res.data.res_content.spec_list[i].price,
+                original: res.data.res_content.spec_list[i].total_price,
                 tax: res.data.res_content.spec_list[i].tax
               });
             } else if (res.data.res_content.intax == '1' && res.data.res_content.inbond == '1') {
               var price = (res.data.res_content.spec_list[i].price + res.data.res_content.spec_list[i].tax).toFixed(2);
               this.setData({
-                activeprice: price
+                discount_price: res.data.res_content.spec_list[i].discount_price,
+                original: res.data.res_content.spec_list[i].total_price,
               });
             } else if (res.data.res_content.inbond == '0') {
               this.setData({
-                activeprice: res.data.res_content.spec_list[i].price,
+                discount_price: res.data.res_content.spec_list[i].discount_price,
+                original: res.data.res_content.spec_list[i].total_price,
               });
             }
           }
@@ -153,29 +169,73 @@ Page({
       console.log(res)
     }, this.data.userid)
   },
+  // 倒计时
+  counttime() {
+    if (new Date(this.data.product.seckill_time.replace("T", " ").replace("-", "/").replace("-", "/")).getTime() - new Date(this.data.product.server_time).getTime() - this.data.time > 0) {
+      let time = (new Date(this.data.product.seckill_time.replace("T", " ").replace("-", "/").replace("-", "/")).getTime() - new Date(this.data.product.server_time).getTime() - this.data.time) / 1000;
+      // 获取天、时、分、秒
+      let day = parseInt(time / (60 * 60 * 24));
+      let hou = parseInt(time % (60 * 60 * 24) / 3600);
+      let min = parseInt(time % (60 * 60 * 24) % 3600 / 60);
+      let sec = parseInt(time % (60 * 60 * 24) % 3600 % 60);
+      var obj = {
+        day: this.timeFormat(day),
+        hou: this.timeFormat(hou),
+        min: this.timeFormat(min),
+        sec: this.timeFormat(sec)
+      }
+      this.setData({
+        counttime: obj,
+        Iscount: true,
+      })
+    } else { //活动已结束，全部设置为'00'
+      var obj = {
+        day: '00',
+        hou: '00',
+        min: '00',
+        sec: '00'
+      }
+      this.setData({
+        counttime: obj,
+        Iscount: false,
+      })
+    }
+    if (this.data.Iscount) {
+      setTimeout(this.counttime, 1000);
+      setTimeout(this.addtime, 1000);
+    }
+  },
+  addtime() {
+    this.setData({
+      time: this.data.time + 1000
+    })
+  },
+  timeFormat(param) { //小于10的格式化函数
+    return param < 10 ? '0' + param : param;
+  },
   // 下单显示弹窗
-  onChangeShowState: function(options) {
+  onChangeShowState: function (options) {
     //根据data-type 判断是加入购物车还是立即购买 分销版不用判断
     // if (this.data.team.action_flag == '0') {
     //   this.selectComponent("#Toast").showToast("你资料还在审核中暂时无法购买")
     // } else if (this.data.team.action_flag == '2') {
     //   this.selectComponent("#Toast").showToast("很抱歉，你的资料没有审核通过，暂时无法购买，请重新上传或者联系客服")
     // } else if (this.data.team.action_flag == '1') {
-      if (options.target.dataset.type) {
-        this.setData({
-          widgets: (!this.data.widgets),
-          isAddCart: options.target.dataset.type
-        })
-      } else {
-        this.setData({
-          widgets: (!this.data.widgets),
-        })
+    if (options.currentTarget.dataset.type) {
+      this.setData({
+        widgets: (!this.data.widgets),
+        isAddCart: options.currentTarget.dataset.type
+      })
+    } else {
+      this.setData({
+        widgets: (!this.data.widgets),
+      })
       // }
 
     }
   },
   // 选择规格
-  rudioChoose: function(options) {
+  rudioChoose: function (options) {
     //设置当前样式
     this.setData({
       specificationId: options.currentTarget.dataset.id,
@@ -186,50 +246,57 @@ Page({
     });
     if (this.data.product.intax == '0') {
       this.setData({
-        activeprice: options.currentTarget.dataset.price,
+        discount_price: options.currentTarget.dataset.item.discount_price,
+        original: options.currentTarget.dataset.item.total_price,
         tax: options.currentTarget.dataset.tax
       });
     } else {
       var price = (options.currentTarget.dataset.price + options.currentTarget.dataset.tax).toFixed(2);
       this.setData({
-        activeprice: price
+        discount_price: options.currentTarget.dataset.item.discount_price,
+        original: options.currentTarget.dataset.item.total_price,
       });
     }
   },
   //售空
-  soldout: function() {
+  soldout: function () {
     this.selectComponent("#Toast").showToast("此规格已售罄，换一个吧~")
   },
   //增加数量
-  addNum: function(options) {
+  addNum: function (options) {
     this.setData({
       quantity: this.data.quantity + 1
     });
   },
   //减少数量
-  subNum: function(options) {
+  subNum: function (options) {
     this.setData({
       quantity: this.data.quantity - 1
     });
   },
   //没有更多
-  nomore: function(options) {
+  nomore: function (options) {
     this.selectComponent("#Toast").showToast("不能比库存多哦~QAQ")
   },
   //加入购物车
-  addcart: function() {
+  addcart: function () {
     if (this.data.repertory == '0') {
       this.setData({
         widgets: (!this.data.widgets),
       });
       this.selectComponent("#Toast").showToast("已售空");
     } else {
+      wx.showLoading({
+        title: '加载中…',
+        mask: true
+      })
       var cartdata = {};
       cartdata.goods_id = this.data.product.goods_id;
       cartdata.spec_no = this.data.currentTab;
       cartdata.count = this.data.quantity;
       network.POST('ShoppingCart/AddToCart', cartdata,
         (res) => {
+          wx.hideLoading();
           if (res.data.res_status_code == '0') {
             wx.showToast({
               title: '成功',
@@ -248,66 +315,62 @@ Page({
     }
   },
   //立即购买
-  addorder: function() {
-    if (this.data.repertory == '0') {
-      this.setData({
-        widgets: (!this.data.widgets),
-      });
-      this.selectComponent("#Toast").showToast("已售空");
+  addorder: function () {
+    if (this.data.Iscount) {
+      this.selectComponent("#Toast").showToast("活动还未开始~");
     } else {
-      var cartdata = {};
-      cartdata.goods_id = this.data.product.goods_id;
-      cartdata.spec_no = this.data.currentTab;
-      cartdata.count = this.data.quantity;
-      wx.showLoading({
-        title: '生成订单中…',
-        mask:true
-      })
-      network.POST('Order/CreateOrderFromGoods', cartdata,
-        (res) => {
-          console.log(res)
-          wx.hideLoading();
-          if (res.data.res_status_code == '0') {
-            wx.navigateTo({
-              url: '../final/final?order_no=' + res.data.res_content.order.order_no
-            })
-          } else {
-            this.selectComponent("#Toast").showToast(res.data.res_message);
-          }
-          
-          // if (res.data.res2 == '要税') {
-          //   //身份认证
-          //   wx.navigateTo({
-          //     url: '../sfzheng/sfzheng?oid=' + res.data.res1
-          //   })
-          // } else {
-          //   wx.navigateTo({
-          //     url: '../final/final?oid=' + res.data.res1
-          //   })
-          // }
-        }, (res) => {
-          console.log(res);
+      if (this.data.repertory == '0') {
+        this.setData({
+          widgets: (!this.data.widgets),
+        });
+        this.selectComponent("#Toast").showToast("已售空");
+      } else {
+        var cartdata = {};
+        cartdata.goods_id = this.data.product.goods_id;
+        cartdata.spec_no = this.data.currentTab;
+        cartdata.count = this.data.quantity;
+        wx.showLoading({
+          title: '生成订单中…',
+          mask: true
         })
+        network.POST('Order/CreateOrderFromGoods', cartdata,
+          (res) => {
+            console.log(res)
+            wx.hideLoading();
+            if (res.data.res_status_code == '0') {
+              wx.navigateTo({
+                url: '../final/final?order_no=' + res.data.res_content.order.order_no
+              })
+            } else {
+              this.selectComponent("#Toast").showToast(res.data.res_message);
+            }
+          }, (res) => {
+            console.log(res);
+          })
+      }
     }
+
 
   },
 
   //前往首页
-  gohome: function() {
+  gohome: function () {
     wx.switchTab({
       url: '../index/index'
     });
   },
   //前往购物车
-  gocart: function() {
+  gocart: function () {
     wx.switchTab({
       url: '../cart/cart'
     });
   },
   // 商品收藏
-  collect:function(){
-    if (this.data.product.is_collected==0) {
-      network.POST('ShopGoods/AddMyGoodsCollection', { goods_id: this.data.product.goods_id },
+  collect: function () {
+    if (this.data.product.is_collected == 0) {
+      network.POST('ShopGoods/AddMyGoodsCollection', {
+        goods_id: this.data.product.goods_id
+      },
         (res) => {
           console.log(res)
           if (res.data.res_status_code == '0') {
@@ -318,8 +381,10 @@ Page({
         }, (res) => {
           console.log(res);
         })
-    }else{
-      network.POST('ShopGoods/RemoveMyGoodsCollection', { goods_id: this.data.product.goods_id },
+    } else {
+      network.POST('ShopGoods/RemoveMyGoodsCollection', {
+        goods_id: this.data.product.goods_id
+      },
         (res) => {
           console.log(res)
           if (res.data.res_status_code == '0') {
@@ -331,10 +396,12 @@ Page({
           console.log(res);
         })
     }
-    
+
   },
-  AddMyBrandCollection:function(){
-    network.POST('Brand/AddMyBrandCollection', { brand_code: this.data.product.brand_code },
+  AddMyBrandCollection: function () {
+    network.POST('Brand/AddMyBrandCollection', {
+      brand_code: this.data.product.brand_code
+    },
       (res) => {
         console.log(res)
         if (res.data.res_status_code == '0') {
@@ -347,7 +414,9 @@ Page({
       })
   },
   RemoveMyBrandCollection: function () {
-    network.POST('Brand/RemoveMyBrandCollection', { brand_code: this.data.product.brand_code },
+    network.POST('Brand/RemoveMyBrandCollection', {
+      brand_code: this.data.product.brand_code
+    },
       (res) => {
         if (res.data.res_status_code == '0') {
           this.selectComponent("#Toast").showToast("取消收藏~");
@@ -359,7 +428,7 @@ Page({
       })
   },
   // 转发
-  onShareAppMessage: function(res) {
+  onShareAppMessage: function (res) {
     var pages = getCurrentPages();
     var currentPage = pages[pages.length - 1];
     var options = currentPage.options;
@@ -370,10 +439,10 @@ Page({
       title: this.data.product.goods_name,
       path: 'pages/product/product?id=' + options.id,
       imageUrl: this.data.product.main_image,
-      success: function(res) {
+      success: function (res) {
         // 转发成功
       },
-      fail: function(res) {
+      fail: function (res) {
         // 转发失败
       }
     }

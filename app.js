@@ -12,14 +12,16 @@ App({
     // this.getUserInfo();
   },
   //获取系统配置 暂时没有用到 以后可能模板消息会遇到
-  // GetAccessToken:function(){
-  //   network.GET('WxConfig/GetAccessToken', 
-  //   (res) => {
-  //   console.log(res)
-  //   }, (res) => {
-  //     console.log(res);
-  //   })
-  // },
+  GetAccessToken:function(){
+    network.GET('WxConfig/GetAccessToken', 
+    (res) => {
+    console.log(res)
+       
+   
+    }, (res) => {
+      console.log(res);
+    })
+  },
   update:function(){
     // 获取小程序更新机制兼容
     if (wx.canIUse('getUpdateManager')) {
@@ -79,17 +81,17 @@ App({
             },
             success: (res) => {
               console.log(res)
-              this.globalData.open_id = res.data.res_content.open_id;
-              this.globalData.userInfo = res.data.res_content;
-              typeof cb == "function" && cb(this.globalData.userInfo, res.data.res_content.open_id)
-              // if (res.data.res_content.real_name==null){
-              //   setTimeout(function () {
-              //     wx.navigateTo({
-              //       url: '../login/login?openid=' + res.data.res_content.open_id
-              //     })
-              //   }, 1000)
-              
-              // }
+              if (res.data.res_status_code == '0') {
+                this.globalData.open_id = res.data.res_content.open_id;
+                this.globalData.userInfo = res.data.res_content;
+                typeof cb == "function" && cb(this.globalData.userInfo, res.data.res_content.open_id)
+                // if (res.data.res_content.real_name==null){
+                //   setTimeout(function () {
+                //     wx.navigateTo({
+                //       url: '../login/login?openid=' + res.data.res_content.open_id
+                //     })
+                //   }, 1000)
+                // }
                 wx.setStorage({
                   key: 'open_id',
                   data: res.data.res_content.open_id,
@@ -98,6 +100,13 @@ App({
                   key: 'userinfo',
                   data: res.data.res_content,
                 });
+
+              }else{
+                wx.showToast({
+                  icon: "none",
+                  title: res.data.res_message,
+                })
+              }
               
              
             },

@@ -13,27 +13,30 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     imgUrls: [],
     navigation_list: [],
-    special: [
-    ],
-    page:{},
+    special: [],
+    page: {},
     indicatorDots: true,
     autoplay: true,
     interval: 5000,
     duration: 500,
-    circular:true,
+    circular: true,
     toView: 'red',
     scrollTop: 100,
-    topNum:"",
+    topNum: "",
     imgheights: [],
     resourceurl: resourceurl
   },
-  onLoad: function () {
+  formSubmit: function(e) {
+    console.log(e.detail.formId)
+    network.PostFormId(e.detail.formId)
+  },
+  onLoad: function() {
     network.IsuserInfo();
   },
   /**
-* 生命周期函数--监听页面显示
-*/
-  onShow: function () {
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
     app.getUserInfo((userInfo, open_id) => {
       //更新数据
       this.setData({
@@ -43,14 +46,14 @@ Page({
       if (!this.data.userid) {
         this.selectComponent("#Toast").showToast("信息读取失败，请刷新后重试");
       }
-     
+
     })
-    network.GET("HomePage/RequestHomePage",(res)=>{
-      if (res.data.res_content.page.category_show_type == 'A'){
+    network.GET("HomePage/RequestHomePage", (res) => {
+      if (res.data.res_content.page.category_show_type == 'A') {
         for (var i = 0; i < res.data.res_content.recommend.length; i++) {
           res.data.res_content.recommend[i].category_goods_list = res.data.res_content.recommend[i].category_goods_list.slice(0, 6)
         }
-      } else if (res.data.res_content.page.category_show_type == 'B'){
+      } else if (res.data.res_content.page.category_show_type == 'B') {
         for (var i = 0; i < res.data.res_content.recommend.length; i++) {
           res.data.res_content.recommend[i].category_goods_list = res.data.res_content.recommend[i].category_goods_list.slice(0, 8)
         }
@@ -66,14 +69,14 @@ Page({
       this.setData({
         imgUrls: res.data.res_content.banner,
         special: res.data.res_content.recommend,
-        page:res.data.res_content.page,
+        page: res.data.res_content.page,
         navigation_list: res.data.res_content.navigation_list
       })
-    },(res)=>{
+    }, (res) => {
       console.log(res)
     })
   },
-  imageLoad: function (e) {
+  imageLoad: function(e) {
     //获取图片真实宽度
     var imgwidth = e.detail.width,
       imgheight = e.detail.height,
@@ -89,13 +92,15 @@ Page({
       imgheights: imgheights,
     })
   },
-  bindchange: function (e) {
+  bindchange: function(e) {
     console.log(e.detail.current)
-    this.setData({ current: e.detail.current })
+    this.setData({
+      current: e.detail.current
+    })
   },
 
   // 前往搜索页，带个参数
-  gosearch: function (e) {
+  gosearch: function(e) {
     wx.navigateTo({
       url: "/pages/search/search",
     })
@@ -107,26 +112,26 @@ Page({
   //     hasUserInfo: true
   //   })
   // },
-  onShareAppMessage: function (res) {
+  onShareAppMessage: function(res) {
 
     if (res.from === 'button') {
       // 来自页面内转发按钮
     }
     return {
       title: this.data.product.title,
-      success: function (res) {
+      success: function(res) {
         // 转发成功
       },
-      fail: function (res) {
+      fail: function(res) {
         // 转发失败
       }
     }
   },
-  returnTop(){
+  returnTop() {
     this.setData({
       topNum: 0
     });
   },
-  
+
 
 })

@@ -103,15 +103,14 @@ Page({
   },
   //支付
   zhifu: function (event) {
+    console.log('是否保税区', this.data.order.verify_id_flag, (this.data.order.real_name == null || this.data.order.id_card == null) && this.data.order.verify_id_flag)
     if (this.data.order.province == null) {
       this.selectComponent("#Toast").showToast("请选择收货地址");
     } else if ((this.data.order.real_name == null || this.data.order.id_card == null) && this.data.order.verify_id_flag){
-      this.setData({
-        autonym:true
-      })
+      this.selectComponent("#Toast").showToast("请选择身份证信息");
     } else {
       wx.navigateTo({
-        url: '../zhifu/zhifu?order_no=' + this.data.order.order_no
+        url: '../zhifu/zhifu?order_no=' + this.data.order.order_no +"&&formId="+event.detail.formId
       })
     }
   },
@@ -151,12 +150,11 @@ Page({
     if (this.data.order.province == null) {
       this.selectComponent("#Toast").showToast("请选择收货地址");
     } else if ((this.data.order.real_name == null || this.data.order.id_card == null) && this.data.order.verify_id_flag) {
-      this.setData({
-        autonym: true
-      })
+      this.selectComponent("#Toast").showToast("请选择身份证信息");
     } else {
       wx.showLoading({
         title: '生成订单中…',
+        mask: true,
       })
       network.POST('OrderPay/AliOrderPay', { order_no: this.data.order_no },
         (res) => {
@@ -167,6 +165,7 @@ Page({
             })
             wx.showLoading({
               title: '正在生成图片',
+              mask: true,
             })
             const wxGetImageInfo = promise.promisify(wx.getImageInfo)
             var order = res.data.res_content;
@@ -218,6 +217,12 @@ Page({
           }
         }, (res) => {
           console.log(res);
+          wx.hideLoading();
+          this.setData({
+            tips: "请求超时,请稍后再来",
+            islayer: true,
+            button: '去逛逛吧'
+          })
         })
     }
     

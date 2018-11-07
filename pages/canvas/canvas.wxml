@@ -1,3 +1,0 @@
-<!--pages/canvas/canvas.wxml-->
-<canvas canvas-id="shareCanvas" style="width:500rpx;height:800rpx"></canvas>
-<button bindtap='save'>保存到本地</button>

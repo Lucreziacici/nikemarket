@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 13,
 			"list": [
 				{
 					"id": 0,
@@ -90,7 +90,7 @@
 					"id": 9,
 					"name": "订单详情",
 					"pathName": "pages/orderDetail/orderDetail",
-					"query": "order_no=D13828233371321344"
+					"query": "order_no=D13918792355431424&status="
 				},
 				{
 					"id": -1,
@@ -108,13 +108,13 @@
 					"id": 12,
 					"name": "下单",
 					"pathName": "pages/final/final",
-					"query": "order_no=D13880714251912192"
+					"query": "order_no=D13918792355431424"
 				},
 				{
 					"id": 13,
 					"name": "商品详情",
 					"pathName": "pages/product/product",
-					"query": "id=374"
+					"query": "id=1294"
 				},
 				{
 					"id": 23,
@@ -171,12 +171,6 @@
 					"query": ""
 				},
 				{
-					"id": -1,
-					"name": "画图",
-					"pathName": "pages/canvas/canvas",
-					"query": ""
-				},
-				{
 					"id": 24,
 					"name": "团购",
 					"pathName": "grounpBuy/pages/grounpList/grounpList",
@@ -192,6 +186,12 @@
 					"id": 27,
 					"name": "团购规则",
 					"pathName": "grounpBuy/pages/grounprules/grounprules",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "身份证列表",
+					"pathName": "pages/idcardList/idcardList",
 					"query": ""
 				}
 			]

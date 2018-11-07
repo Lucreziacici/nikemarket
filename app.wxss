@@ -309,6 +309,19 @@ overflow-y:auto;
   font-size: 10pt;
   border-radius: 10rpx;
 }
+.button button{
+  font-size: 10pt;
+  color:white;
+  background: transparent;
+  border:none;
+  outline: 0;
+  width: 600rpx;
+}
+.button button::after{
+
+  border:none;
+  outline: 0;
+}
 .model_footer{
   margin: 40rpx 0 32rpx 0;
   color: #c37f55;

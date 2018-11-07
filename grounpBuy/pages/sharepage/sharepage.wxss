@@ -125,8 +125,13 @@ page {
   align-items: center;
   justify-content: center;
   flex: 1;
+  border:none;
+  outline: none;
 }
-
+ button::after {
+  border:none;
+  outline: none;
+}
 .groupons_button .gray {
   background: white;
   border: 1px solid #d8d8d8;

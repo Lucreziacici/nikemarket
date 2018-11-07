@@ -33,6 +33,10 @@ Page({
     })
     network.IsuserInfo();
   },
+  formSubmit: function (e) {
+    console.log(e.detail.formId)
+    network.PostFormId(e.detail.formId)
+  },
   onShow: function () {
     app.getUserInfo((userInfo, open_id) => {
       //更新数据
@@ -213,6 +217,7 @@ Page({
   }),
   //提交订单
   formBindsubmit: function (e) {
+    console.log(e)
     var opneid = e.detail.value.openid
     var appid = e.detail.value.appid
     this.setData({
@@ -338,5 +343,82 @@ Page({
   //不能再少啦
   least: function () {
     this.selectComponent("#Toast").showToast("不能再少啦~QAQ");
+  },
+  // 打开修改数量模态框
+  opennum: function (e) {
+    console.log(e)
+    this.setData({
+      IsShow: true,
+      ActiveItem: e.currentTarget.dataset.item,
+      ActiveItemcount: e.currentTarget.dataset.item.count
+    })
+  },
+  // 减少
+  activesubNum: function (e) {
+    console.log(this.data.ActiveItemcount)
+    if (this.data.ActiveItemcount > 1) {
+      this.setData({
+        ActiveItemcount: parseInt(this.data.ActiveItemcount) - 1
+      })
+    } else {
+      this.least();
+    }
+  },
+  // 增加
+  activeaddNum: function (e) {
+    if (this.data.ActiveItemcount < this.data.ActiveItem.stock_count) {
+      this.setData({
+        ActiveItemcount: parseInt(this.data.ActiveItemcount) + 1
+      })
+    } else {
+      this.most();
+    }
+  },
+  bindKeyInput: function (e) {
+    this.setData({
+      ActiveItemcount: e.detail.value
+    })
+  },
+  closechangebox: function (e) {
+    this.setData({
+      IsShow: false,
+    })
+  },
+  changeNumSure: function (e) {
+    console.log(e)
+    if (this.data.ActiveItemcount <= 0) {
+      this.least();
+      this.closechangebox();
+    } else if (this.data.ActiveItemcount >= this.data.ActiveItem.stock_count) {
+      this.most();
+      this.closechangebox();
+    } else {
+      var data = {};
+      data.id = this.data.ActiveItem.id;
+      data.count = this.data.ActiveItemcount;
+      network.POST('ShoppingCart/CartReviseNumber', data,
+        (res) => {
+          if (res.data.res_status_code == '0') {
+            var carts = [];
+            for (var i = 0; i < res.data.res_content.cart_list.length; i++) {
+              for (var j = 0; j < this.data.cart_ids.length; j++) {
+                if (res.data.res_content.cart_list[i].id == this.data.cart_ids[j]) {
+                  res.data.res_content.cart_list[i].checked = true;
+                  break
+                }
+              }
+            }
+            this.setData({
+              carts: res.data.res_content.cart_list
+            })
+            this.GetMyCartTotalPrice();
+          } else {
+            this.selectComponent("#Toast").showToast(res.data.res_message);
+          }
+        }, (res) => {
+          console.log(res);
+        })
+      this.closechangebox();
+    }
   }
 })

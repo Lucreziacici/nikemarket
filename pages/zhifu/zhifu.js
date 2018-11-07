@@ -35,7 +35,7 @@ Page({
       title: '请求支付中…',
     })
     var that = this
-    network.POST('OrderPay/WxOrderPay', { order_no: options.order_no },
+    network.POST('OrderPay/WxOrderPay', { order_no: options.order_no,form_id:options.formId },
       (res) => {
         wx.hideLoading();
         if (res.data.res_status_code == '0') {
@@ -78,6 +78,12 @@ Page({
         }
       }, (res) => {
         console.log(res);
+        wx.hideLoading();
+        this.setData({
+          tips: "请求超时,请稍后再来",
+          islayer: true,
+          button: '去逛逛吧'
+        })
       }, this.data.userid)
 
     // app.getUserInfo(function (userInfo, openid) {

@@ -38,7 +38,7 @@
       <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIt3vaaDAL9NMcw5Yric75Ia5xTk7arUQlgjyErXyMYrlXbUJlO5O81XshDdScCHl7uKymIMk0ianVA/132' class='head'></image>
     </view>
     <view class='groupons_memberitem'>
-      <image src='../../../images/question_mark.png'></image>
+      <image src='{{resourceurl}}question_mark.png'></image>
     </view>
   </view>
   <!-- 团购邀请按钮 -->
@@ -52,16 +52,16 @@
   <!-- 成功开团的按钮 -->
   <view class='groupons_button'>
     <button class='gray'>查看订单</button>
-    <button>再逛逛吧</button>
+    <button bindtap=''>再逛逛吧</button>
   </view>
   <view class='orderdetail_list'>
     <view class='orderdetail_item'>
      <view>商品名称</view>
-     <view><view class='product_title'>正品资生堂fino深层浸透发膜有效滋养修护230g正品资生堂fino深层浸透发膜有效滋养修护230g</view><image src='../../../images/8.png'></image></view>
+     <view><view class='product_title'>正品资生堂fino深层浸透发膜有效滋养修护230g正品资生堂fino深层浸透发膜有效滋养修护230g</view><image src='{{resourceurl}}8.png'></image></view>
     </view>
     <view class='orderdetail_item'>
      <view>拼购规则</view>
-     <view><view class='product_title'>好友参团·人满发货·不满退款</view><image src='../../../images/8.png'></image></view>
+     <view><view class='product_title'>好友参团·人满发货·不满退款</view><image src='{{resourceurl}}8.png'></image></view>
     </view>
   </view>
 </page>

@@ -18,6 +18,10 @@ Page({
         link:"../addressList/addressList"
       },
       {
+        name: "身份证信息管理",
+        link: "../idcardList/idcardList"
+      },
+      {
         name: "我的足迹",
         link: "../footprint/footprint"
       },
@@ -29,6 +33,7 @@ Page({
         name: "优惠劵管理",
         link: "../yhjuan/yhjuan"
       },
+      
       // {
       //   name: "我的资料",
       //   link: "../memberInformation/memberInformation"

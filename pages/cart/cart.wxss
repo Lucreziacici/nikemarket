@@ -192,7 +192,12 @@ page {
   align-items: center;
   justify-content: center;
 }
-
+.body-bottom-2 button{
+  outline: 0;
+  border:0;
+  background-color: #9c855c;
+  color: white;
+}
 .bottom-text1 {
   position: relative;
   /* left: 50rpx; */
@@ -266,4 +271,89 @@ page {
   height: 100%;
   display: flex;
   align-items: center;
+}
+.changenum {
+  /* display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center; */
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.layer {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+}
+
+.changebox {
+  width: 510rpx;
+  height: 400rpx;
+  margin: 200rpx 120rpx 0 120rpx;
+  background: white;
+  position: absolute;
+  z-index: 10;
+}
+.changebox_header{
+  padding: 48rpx  0 0 40rpx;
+  color: #1d2223;
+  display: flex;
+  justify-self: flex-start;
+  font-size: 10pt;
+}
+.changebox_main{
+  padding: 72rpx 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15pt;
+}
+.changebox_main input{
+  width: 75rpx;
+  height: 66rpx;
+  border: 1px solid #979797;
+  margin: 0 20rpx;
+}
+.changebox_footer{
+  display: flex;
+  justify-content: space-around;
+  
+}
+.changebox_footer .changebox_footer_button{
+  width: 244rpx;
+  height: 76rpx;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+  font-size: 10pt;
+}
+.changebox_footer_button button{
+  outline: 0;
+  border:none;
+  background: transparent;
+  font-size: 10pt;
+  color: white;
+}
+button::after{
+   outline: 0;
+  border:none;
+}
+.changebox_footer .changebox_footer_button:nth-child(1){
+  background: #9a9a9a;
+}.changebox_footer .changebox_footer_button:nth-child(2){
+  background: #9c855c;
 }

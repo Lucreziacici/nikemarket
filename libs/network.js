@@ -15,7 +15,6 @@ var shop_id = "1";
 //不需要检测open_id的接口
 var detectionport = [];
 detectionport.push("Customer/GetOpenID");
-detectionport.push("HomePage/RequestHomePage");
 detectionport.push("Category/BigCategoryList");
 detectionport.push("Category/CategoryList");
 detectionport.push("Brand/BrandList");
@@ -296,6 +295,50 @@ function IsuserInfo(success, fail) {
 
 }
 
+function PostFormId(e) {
+  if (e =='the formId is a mock one')return false
+  wx.getStorage({
+    key: 'open_id',
+    success: (res) => {
+      open_id = res.data
+      wx.request({
+        url: commonurl + 'Template/CollectFormID',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'open_id': open_id,
+          'shop_id': shop_id
+        },
+        method: 'POST',
+        data: { form_id: e },
+        success: function (res) {
+          console.log(res)
+        },
+        fail: function (res) {
+          console.log(res)
+        }
+      });
+    },
+    fail: (res) => {
+      wx.request({
+        url: commonurl + 'Template/CollectFormID',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'open_id': open_id,
+          'shop_id': shop_id
+        },
+        method: 'POST',
+        data: { form_id: e },
+        success: function (res) {
+          console.log(res)
+        },
+        fail: function (res) {
+          console.log(res)
+        }
+      });
+    }
+  })
+}
+
 function throttle(fn, gapTime) {
   if (gapTime == null || gapTime == undefined) {
     gapTime = 1500
@@ -317,5 +360,6 @@ module.exports = {
   POST: POST,
   GETJSON: GETJSON,
   IsuserInfo: IsuserInfo,
-  throttle: throttle
+  throttle: throttle,
+  PostFormId: PostFormId
 }

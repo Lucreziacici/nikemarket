@@ -1,4 +1,12 @@
 <!--index.wxml-->
+
+<!-- <view>
+<form bindsubmit="formSubmit" report-submit="true">
+    <input name="input" class="input" placeholder="please input here" />
+    <button formType="submit">Submit</button>
+    <button formType="reset">Reset</button>
+  </form>
+</view> -->
 <!--搜索框  -->
 <view class='search-box'>
   <view class='search-item' bindtap="gosearch">
@@ -20,16 +28,20 @@
     </swiper>
     <!--导航菜单  -->
     <view class='navigation' wx:if="{{navigation_list.length>0}}">
-    <block wx:for="{{navigation_list}}" wx:key="{{item.id}}">
-      <navigator class='navigation-item' url="{{item.link_url}}">
-        <image src="{{item.img_url}}" mode='widthFix'></image>
-        <text class='common-color'>{{item.modal_name}}</text>
-      </navigator>
-    </block>
-  </view>
+      <block wx:for="{{navigation_list}}" wx:key="{{item.id}}">
+        <navigator class='navigation-item' url="{{item.link_url}}">
+          <image src="{{item.img_url}}" mode='widthFix'></image>
+          <text class='common-color'>{{item.modal_name}}</text>
+        </navigator>
+      </block>
+    </view>
     <!-- 公告 -->
     <view wx:if="{{page.shop_notice_url}}" class='notice'>
-      <image src='{{page.shop_notice_url}}' mode="widthFix"></image>
+      <form report-submit="true" bindsubmit="formSubmit">
+        <button formType="submit" hover-class="none">
+          <image src='{{page.shop_notice_url}}' mode="widthFix"></image>
+        </button>
+      </form>
     </view>
     <!--专题  -->
     <view wx:for="{{special}}" class="special" wx:key="{{item.id}}">
@@ -49,13 +61,11 @@
             <block wx:for="{{item.category_goods_list}}" wx:key="key">
               <Commodity title='{{item.goods_name}}' commodity="{{item}}" commodityid="{{item.goods_id}}" img="{{item.main_image}}" price="{{item.show_price}}" show_type="{{page.category_show_type}}" isApprove='{{isApprove}}' item="{{item}}"></Commodity>
             </block>
-            <view  class='commodity_more_{{page.category_show_type}}'>
+            <view class='commodity_more_{{page.category_show_type}}'>
               <navigator url='../activity/activity?category={{item.category}}&&category_order={{item.category_order}}&&home_id={{page.id}}' hover-class='none'>
                 <image mode="widthFix" src='{{resourceurl}}more.png'></image>
               </navigator>
             </view>
-
-
           </view>
         </scroll-view>
       </view>
@@ -64,9 +74,7 @@
           <image mode="widthFix" src='{{resourceurl}}more.png'></image>
         </navigator>
       </view>
-
     </view>
-
   </view>
 </scroll-view>
 <view class='top' catchtap='returnTop'>
