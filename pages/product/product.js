@@ -130,7 +130,7 @@ Page({
             break;
           } else {
             this.setData({
-              discount_price: res.data.res_content.spec_list[i].price,
+              discount_price: res.data.res_content.spec_list[i].discount_price,
               discount_type_name: res.data.res_content.spec_list[i].discount_type_name,
               original: res.data.res_content.spec_list[i].total_price,
             });

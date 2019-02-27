@@ -1,59 +1,66 @@
-//获取应用实例
-var app = getApp()
-var url = app.globalData.url
-var appid = app.globalData.appid
-var title = app.globalData.title
-var network = require("../../libs/network.js")
+// pages/yhjuan/yhjuan.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    url1:app.globalData.url,
-    currentTab: 0,
-    wsyyhj:null,
-    ysyyhj:null,
-    ygqyhj: null,
-    heigjt:0,
-    
-  },
-  swichNav: function (e) {
-
-    var that = this;
-    
-    if (this.data.currentTab === e.target.dataset.current) {
-      return false;
-    } else {
-      that.setData({
-        currentTab: e.target.dataset.current,
-      })
-    }
 
   },
-  /*** 滑动切换tab***/
-  bindChange: function (e) {
-    var that = this;
-    that.setData({ currentTab: e.detail.current });
-  },
+
   /**
- * 生命周期函数--监听页面加载
- */
+   * 生命周期函数--监听页面加载
+   */
   onLoad: function (options) {
-    var that = this
-    //调用应用实例的方法获取全局数据
-    network.GET('/team!wsyyhj.action?team.openid=' + options.openid + '&appid=' + appid,
-      (res) => {
-        that.setData({
-          wsyyhj: res.data.wsy,
-          ysyyhj: res.data.ysy,
-          ygqyhj: res.data.ygq,
-          height: res.data.num * 100,
-        });
-      }, (res) => {
-        console.log(res);
-      })
+
   },
- 
-  
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
 })

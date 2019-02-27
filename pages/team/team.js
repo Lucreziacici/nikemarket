@@ -31,7 +31,7 @@ Page({
       },
       {
         name: "优惠劵管理",
-        link: "../yhjuan/yhjuan"
+        link: "../couponList/couponList"
       },
       
       // {

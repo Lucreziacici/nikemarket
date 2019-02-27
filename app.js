@@ -71,10 +71,11 @@ App({
           wx.request({
             //正式
             url: "https://mall.shjinjia.com.cn/api/Customer/GetOpenID?js_code=" + e.code + "",
+            // url: "https://mall.comeyang.com/api/Customer/GetOpenID?js_code=" + e.code + "",
             //测试
             // url: "https://mallt.shjinjia.com.cn/api/Customer/GetOpenID?js_code=" + e.code + "",
             //文慧
-            // url: "http://10.10.200.4/MiniProgramMall.Api/api/Customer/GetOpenID?js_code=" + e.code + "",
+            // url: "http://10.10.200.11/MiniProgramMall.Api/api/Customer/GetOpenID?js_code=" + e.code + "",
             header: {
               'Content-Type': 'application/json',
               'shop_id': '1'
@@ -123,5 +124,6 @@ App({
     userInfo: {},
     open_id: null,
     resourceurl: 'http://cdn.mallimg.shjinjia.com.cn/Uploads/SysImages/134/',
+    // resourceurl: 'http://mallimg.comeyang.com/Uploads/SysImages/134/',
   }
 })

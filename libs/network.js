@@ -4,10 +4,11 @@ var open_id;
 
 //公共地址
 var commonurl = "https://mall.shjinjia.com.cn/api/";
+// var commonurl = "https://mall.comeyang.com/api/";
 //测试
 // var commonurl ="https://mallt.shjinjia.com.cn/api/";
 //指向文慧地址
-// var commonurl = "http://10.10.200.4/MiniProgramMall.Api/api/";
+// var commonurl = "http://10.10.200.11/MiniProgramMall.Api/api/";
 
 //店铺号
 var shop_id = "1";
@@ -355,11 +356,37 @@ function throttle(fn, gapTime) {
     }
   }
 }
+function getFormatDate(timestamp) {
+  var newDate = new Date(timestamp);
+  Date.prototype.format = function (format) {
+    var date = {
+      'M+': this.getMonth() + 1,
+      'd+': this.getDate(),
+      'h+': this.getHours(),
+      'm+': this.getMinutes(),
+      's+': this.getSeconds(),
+      'q+': Math.floor((this.getMonth() + 3) / 3),
+      'S+': this.getMilliseconds()
+    };
+    if (/(y+)/i.test(format)) {
+      format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+    }
+    for (var k in date) {
+      if (new RegExp('(' + k + ')').test(format)) {
+        format = format.replace(RegExp.$1, RegExp.$1.length == 1
+          ? date[k] : ('00' + date[k]).substr(('' + date[k]).length));
+      }
+    }
+    return format;
+  }
+  return newDate.format('yyyy-MM-dd');
+}
 module.exports = {
   GET: GET,
   POST: POST,
   GETJSON: GETJSON,
   IsuserInfo: IsuserInfo,
   throttle: throttle,
-  PostFormId: PostFormId
+  PostFormId: PostFormId,
+  getFormatDate: getFormatDate
 }

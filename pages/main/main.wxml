@@ -1,12 +1,4 @@
 <!--index.wxml-->
-
-<!-- <view>
-<form bindsubmit="formSubmit" report-submit="true">
-    <input name="input" class="input" placeholder="please input here" />
-    <button formType="submit">Submit</button>
-    <button formType="reset">Reset</button>
-  </form>
-</view> -->
 <!--搜索框  -->
 <view class='search-box'>
   <view class='search-item' bindtap="gosearch">
@@ -14,7 +6,7 @@
     <text>输入关键字</text>
   </view>
 </view>
-<scroll-view class='scroll_box' scroll-y scroll-with-animation='true' bindchange="bindchange" scroll-top='{{ topNum }}'>
+<scroll-view class='scroll_box' scroll-y scroll-with-animation='true' scroll-top='{{ topNum }}'>
   <view class="container">
     <!--轮播  -->
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" indicator-color="#e1e1e1" indicator-active-color="#fff" interval="{{interval}}" duration="{{duration}}" class='swiper' style="height:{{imgheights[0]}}rpx;">
@@ -35,6 +27,9 @@
         </navigator>
       </block>
     </view>
+    <scroll-view scroll-x="true">
+      <ReceiveCoupon wx:if="{{show_list.length>0}}" show_list="{{show_list}}"></ReceiveCoupon>
+    </scroll-view>
     <!-- 公告 -->
     <view wx:if="{{page.shop_notice_url}}" class='notice'>
       <form report-submit="true" bindsubmit="formSubmit">
@@ -66,6 +61,8 @@
                 <image mode="widthFix" src='{{resourceurl}}more.png'></image>
               </navigator>
             </view>
+
+
           </view>
         </scroll-view>
       </view>
@@ -74,9 +71,14 @@
           <image mode="widthFix" src='{{resourceurl}}more.png'></image>
         </navigator>
       </view>
+
     </view>
+
   </view>
 </scroll-view>
 <view class='top' catchtap='returnTop'>
   <image src='{{resourceurl}}TOP.png'></image>
 </view>
+<Toast id="Toast"></Toast>
+
+<Coupon wx:if="{{pop_list.length>0}}" pop_list="{{pop_list}}" total_coupon="{{total_coupon}}"></Coupon>

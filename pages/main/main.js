@@ -24,19 +24,23 @@ Page({
     scrollTop: 100,
     topNum: "",
     imgheights: [],
-    resourceurl: resourceurl
+    pop_list: [],//自动优惠券
+    show_list: [],//手动领取优惠券
+    total_coupon: {},
+    resourceurl: resourceurl,
   },
-  formSubmit: function(e) {
+  formSubmit: function (e) {
     console.log(e.detail.formId)
     network.PostFormId(e.detail.formId)
   },
-  onLoad: function() {
+  onLoad: function () {
     network.IsuserInfo();
+
   },
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     app.getUserInfo((userInfo, open_id) => {
       //更新数据
       this.setData({
@@ -46,8 +50,14 @@ Page({
       if (!this.data.userid) {
         this.selectComponent("#Toast").showToast("信息读取失败，请刷新后重试");
       }
+      //action_flag 0:未审核，1：已审核
+      if (userInfo.action_flag == 1) {
+        this.setData({
+          isApprove: true
+        })
+      }
+    });
 
-    })
     network.GET("HomePage/RequestHomePage", (res) => {
       if (res.data.res_content.page.category_show_type == 'A') {
         for (var i = 0; i < res.data.res_content.recommend.length; i++) {
@@ -77,8 +87,23 @@ Page({
     }, (res) => {
       console.log(res)
     })
+    this.getCouponList();
   },
-  imageLoad: function(e) {
+  getCouponList: function () {
+    network.GET("Coupon/ShowCouponList", (res) => {
+      console.log(res.data.res_content)
+      this.setData({
+        pop_list: res.data.res_content.pop_list,
+        show_list: res.data.res_content.show_list,
+        total_coupon: res.data.res_content.total_coupon
+      })
+
+    }, (res) => {
+      console.log(res)
+    })
+  },
+
+  imageLoad: function (e) {
     //获取图片真实宽度
     var imgwidth = e.detail.width,
       imgheight = e.detail.height,
@@ -94,37 +119,27 @@ Page({
       imgheights: imgheights,
     })
   },
-  bindchange: function(e) {
+  bindchange: function (e) {
     console.log(e.detail.current)
-    this.setData({
-      current: e.detail.current
-    })
+    this.setData({ current: e.detail.current })
   },
-
   // 前往搜索页，带个参数
-  gosearch: function(e) {
+  gosearch: function (e) {
     wx.navigateTo({
       url: "/pages/search/search",
     })
   },
-  // getUserInfo: function (e) {
-  //   app.globalData.userInfo = e.detail.userInfo
-  //   this.setData({
-  //     userInfo: e.detail.userInfo,
-  //     hasUserInfo: true
-  //   })
-  // },
-  onShareAppMessage: function(res) {
+  onShareAppMessage: function (res) {
 
     if (res.from === 'button') {
       // 来自页面内转发按钮
     }
     return {
       title: this.data.product.title,
-      success: function(res) {
+      success: function (res) {
         // 转发成功
       },
-      fail: function(res) {
+      fail: function (res) {
         // 转发失败
       }
     }

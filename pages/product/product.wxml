@@ -58,8 +58,8 @@
             <text wx-if="{{product.free_post_description}}" decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{product.free_post_description}}</text>
           </view>
           <view wx:else class='tax'>
-          <text wx-if="{{product.show_salesvolume=='Y'}}" decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月销{{product.monthly_sales_volume}}笔</text>
-            <text wx-if="{{product.free_post_description}}" decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{product.free_post_description}}</text>
+          <text wx-if="{{product.show_salesvolume=='Y'}}" decode="{{true}}" space="{{true}}">月销{{product.monthly_sales_volume}}笔&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+          <text wx-if="{{product.free_post_description}}" decode="{{true}}" space="{{true}}">{{product.free_post_description}}</text>
           </view>
         </view>
         <view class='collect_item'>
