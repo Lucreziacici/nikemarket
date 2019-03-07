@@ -28,7 +28,7 @@
           <navigator url="../editAddress/editAddress?id={{item.id}}">
             <image src="{{resourceurl}}dibianji.png">
             </image>
-            <text>编辑</text>
+            <text>修改</text>
           </navigator>
         </view>
         <view class=" address-edit-delete" bindtap="modalShow" id="{{item.id}}">
@@ -40,8 +40,9 @@
     </view>
   </view>
 </radio-group>
-<view class="common-bottom" bindtap="addAddress">
-    <text>新增地址</text>
+<view class="common-bottom flex_between_center" >
+    <text bindtap="useAddress">使用微信地址</text>
+    <text bindtap="addAddress">添加地址</text>
 </view>
 <view class="page__bd">
   <modal title="确认" confirm-text="确定" data-id="{{addressId}}" cancel-text="取消" hidden="{{modalHidden}}" mask bindconfirm="deleteAddress" bindcancel="modalHidden">

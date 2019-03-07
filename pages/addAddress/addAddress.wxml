@@ -27,7 +27,16 @@
       <text class="address-title">详细地址:</text>
       <textarea type="text" auto-height name="address" fixed="true" class="address-input" value='{{detailInfo}}' placeholder="请填写详细地址" />
     </view>
+     <view class="address-edit">
+      <view class="address-checkbox"  bindtap="radioChange">
+          <!-- <label class='checkbox'> -->
+            <!-- <checkbox value="{{item.id}}" data-id='{{item.id}}' hidden="false" /> -->
+            <image src="{{resourceurl}}{{is_default=='1'?'11':'00'}}.png" ></image>
+            <text class="{{is_default=='1'?'common-color':''}}">设为默认</text>
+          <!-- </label> -->
+        </view>
+    </view>
   </view>
- <button class="common-bottom" form-type="submit">添加</button>
+ <button class="addbtn" form-type="submit">保存</button>
 </form>
 <Toast id="Toast"></Toast>

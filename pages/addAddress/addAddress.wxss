@@ -9,7 +9,7 @@ page {
 .address-edit {
   display: flex;
   justify-content: space-between;
-  align-items:flex-start;
+  align-items: flex-start;
   padding: 20rpx 0;
   border-bottom: 1px solid #e7e7e7;
 }
@@ -21,15 +21,53 @@ page {
 
 .address-input {
   font-size: 11pt;
-  width:550rpx;
-  min-height:1.4rem;
+  width: 550rpx;
+  min-height: 1.4rem;
   display: flex;
   vertical-align: middle;
-  
 }
-.address-edit textarea{
+
+.address-edit textarea {
   margin: 5rpx 0 0 0;
 }
-.address-input picker{
+
+.address-input picker {
   width: 100%;
 }
+
+.address-checkbox {
+  font-size: 10pt;
+  display: flex;
+  align-items: center;
+}
+
+.address-checkbox image, .address-edit-option image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.address-checkbox .checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.address-checkbox .checkbox text, .address-edit-redact text,
+.address-edit-delete text {
+  margin: 0 0 0 20rpx;
+  font-size: 10pt;
+}
+
+.addbtn {
+  margin: 20rpx 75rpx 0 75rpx;
+  background-color: #d7bb8f;
+  color: white;
+  padding: 27rpx 0;
+  border-radius: 100rpx;
+  font-size: 10pt;
+  text-align: center;
+  line-height: 30rpx;
+  width: 600rpx;
+}
+.addbtn::after {
+  border: 0;
+} 

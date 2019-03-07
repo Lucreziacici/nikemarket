@@ -3,6 +3,7 @@ var url = app.globalData.url
 var appid = app.globalData.appid
 var title = app.globalData.title
 var network = require("../../libs/network.js")
+var resourceurl = app.globalData.resourceurl
   //上一个页面
 Page({
   data: {
@@ -15,7 +16,9 @@ Page({
     tip:'',//贴士
     telNumber:'',//手机号
     userName:'',//用户名
-    detailInfo:'',//详细地址
+    detailInfo: '',//详细地址
+    resourceurl: resourceurl,
+    is_default:0,
   },
   onLoad: function (options) {
 
@@ -38,6 +41,18 @@ Page({
       city: e.detail.value[1],
       district: e.detail.value[2],
     })
+  },
+  // 切换
+  radioChange(){
+    if (this.data.is_default==1){
+      this.setData({
+        is_default:0
+      })
+    }else{
+      this.setData({
+        is_default: 1
+      })
+    }
   },
   //提交地址
   formBindsubmit: function (e) {
@@ -71,6 +86,7 @@ Page({
       mask: true,
     })
     var formData = e.detail.value;  
+    formData.is_default = this.data.is_default;
     network.POST('CustomerAddress/AddNewAddress', formData,
       (res) => {
         console.log(res)

@@ -8,23 +8,23 @@ var opid = ""
 var network = require("../../libs/network.js")
 Page({
   data: {
-    resources: app.globalData.url,//资源路径
+    resources: app.globalData.url, //资源路径
     // tip:'',//好像没有用到过，后期没问题删掉
-    addresslist: [],//地址列表
-    userInfo: {},//用户信息
-    openid: null,//用户id
-    oid: '',//订单id，数据从上个组件传来
-    onmsg: false,//判断是否为下订单时选择地址，数据从上个组件传来
-    modalHidden: true,//控制模态框显示/隐藏
-    addressId: 0,//地址id
+    addresslist: [], //地址列表
+    userInfo: {}, //用户信息
+    openid: null, //用户id
+    oid: '', //订单id，数据从上个组件传来
+    onmsg: false, //判断是否为下订单时选择地址，数据从上个组件传来
+    modalHidden: true, //控制模态框显示/隐藏
+    addressId: 0, //地址id
     resourceurl: resourceurl
   },
 
 
   /**
-     * 生命周期函数--监听页面加载
-     */
-  onLoad: function (options) {
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
     app.getUserInfo((userInfo, open_id) => {
       //更新数据
       this.setData({
@@ -34,7 +34,7 @@ Page({
         this.selectComponent("#Toast").showToast("信息读取失败，请刷新后重试");
       }
       this.getAddressList();
-      
+
     })
     var that = this
     if (options.oid) {
@@ -43,7 +43,7 @@ Page({
         onmsg: options.onmsg
       });
     }
-    
+
     wx.showLoading({
       title: '加载中....',
       mask: true
@@ -65,36 +65,49 @@ Page({
 
   },
   //获取地址列表
-  getAddressList: function () {
+  getAddressList: function() {
     network.GET('CustomerAddress/AddressList',
       (res) => {
         console.log(res.data)
         wx.hideLoading();
-        if (res.data.res_status_code=='0'){
+        if (res.data.res_status_code == '0') {
           this.setData({
             addresslist: res.data.res_content
           });
-        }else{
+        } else {
           this.selectComponent("#Toast").showToast(res.data.res_message)
         }
-       
+
       }, (res) => {
         console.log(res);
       }, this.data.userid)
   },
   //切换默认地址
-  radioChange: function (e) {
-    wx.showLoading({
-      title: '加载中....',
-      mask: true,
-    })
-    console.log(e)
+  radioChange: function(e) {
     var id = e.currentTarget.dataset.id;
-    network.POST('CustomerAddress/SetDefaultAddress',{id:id},
-      (res) => {
-        if (res.data.res_status_code=='0'){
-          this.getAddressList();
+    var addresslist = this.data.addresslist
+    for (var i = 0; i < addresslist.length; i++) {
+      if (id == addresslist[i].id) {
+        if (addresslist[i].is_default == 0) {
+          addresslist[i].is_default = 1
         } else {
+          addresslist[i].is_default = 0
+        }
+      }else{
+        addresslist[i].is_default = 0
+      }
+    }
+    this.setData({
+      addresslist:addresslist
+    })
+    network.POST('CustomerAddress/SetDefaultAddress', {
+        id: id
+      },
+      (res) => {
+        if (res.data.res_status_code == '0') {
+          // this.getAddressList();
+        } else {
+          this.getAddressList();
           this.selectComponent("#Toast").showToast(res.data.res_message)
         }
         wx.hideLoading();
@@ -103,15 +116,15 @@ Page({
       }, this.data.userid)
   },
   //下单时选择地址 todo  暂时没看懂，看到下单这里再改，暂时只改函数名TODO
-  chooseAddress: function (e) {
+  chooseAddress: function(e) {
     var pages = getCurrentPages();
-    var currPage = pages[pages.length - 1];   //当前页面
-    var prevPage = pages[pages.length - 2];//上局页面
+    var currPage = pages[pages.length - 1]; //当前页面
+    var prevPage = pages[pages.length - 2]; //上局页面
     var id = e.currentTarget.id;
-    var data={};
+    var data = {};
     data.order_no = this.data.oid
-    data.address_id=id
-    network.POST('Order/UpdateOrderAddress',data,
+    data.address_id = id
+    network.POST('Order/UpdateOrderAddress', data,
       (res) => {
         console.log(res)
         if (res.data.res_status_code == '0') {
@@ -120,7 +133,7 @@ Page({
         } else {
           this.selectComponent("#Toast").showToast(res.data.res_message)
         }
-       
+
         // prevPage.setData({
         //   orderinformation: res.data.object,
         //   orderslist: res.data.objs,
@@ -131,7 +144,7 @@ Page({
       }, this.data.userid)
   },
   //弹出确认框  
-  modalShow: function (e) {
+  modalShow: function(e) {
     var id = e.currentTarget.id;
     this.setData({
       modalHidden: false,
@@ -139,12 +152,14 @@ Page({
     })
   },
   //删除地址
-  deleteAddress: function (e) {
+  deleteAddress: function(e) {
     var id = e.currentTarget.dataset.id;
     this.setData({
       modalHidden: true,
     });
-    network.POST('CustomerAddress/DeleteAddress', {id:id},
+    network.POST('CustomerAddress/DeleteAddress', {
+        id: id
+      },
       (res) => {
         if (res.data.res_status_code == '0') {
           this.getAddressList();
@@ -156,13 +171,18 @@ Page({
       }, this.data.userid)
   },
   //取消删除隐藏模态框
-  modalHidden: function (e) {
+  modalHidden: function(e) {
     this.setData({
       modalHidden: true,
     });
   },
   //获取微信地址授权，如果拒绝授权，就跳转
-  addAddress: function (e) {
+  addAddress: function(e) {
+    wx.navigateTo({
+      url: '/pages/addAddress/addAddress'
+    })
+  },
+  useAddress: function(e) {
     if (wx.chooseAddress) {
       wx.chooseAddress({
         success: (res) => {
@@ -189,14 +209,10 @@ Page({
               console.log(res);
             }, this.data.userid)
         },
-        fail: (err) => {
-          wx.navigateTo({
-            url: '/pages/addAddress/addAddress'
-          })
-        }
+
       })
     } else {
       console.log('当前微信版本不支持chooseAddress');
     }
-  },
+  }
 })

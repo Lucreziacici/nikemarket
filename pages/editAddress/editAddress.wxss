@@ -33,3 +33,40 @@ page {
 .address-input picker{
   width: 100%;
 }
+
+.address-checkbox {
+  font-size: 10pt;
+  display: flex;
+  align-items: center;
+}
+
+.address-checkbox image, .address-edit-option image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.address-checkbox .checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.address-checkbox .checkbox text, .address-edit-redact text,
+.address-edit-delete text {
+  margin: 0 0 0 20rpx;
+  font-size: 10pt;
+}
+
+.addbtn {
+  margin: 20rpx 75rpx 0 75rpx;
+  background-color: #d7bb8f;
+  color: white;
+  padding: 27rpx 0;
+  border-radius: 100rpx;
+  font-size: 10pt;
+  text-align: center;
+  line-height: 30rpx;
+  width: 600rpx;
+}
+.addbtn::after {
+  border: 0;
+} 

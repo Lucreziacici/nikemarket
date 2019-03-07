@@ -4,6 +4,7 @@ var url = app.globalData.url
 var appid = app.globalData.appid
 var title = app.globalData.title
 var network = require("../../libs/network.js")
+var resourceurl = app.globalData.resourceurl
 //上一个页面
 Page({
   data: {
@@ -14,7 +15,9 @@ Page({
     city: '',//市
     district: '',//区
     appid: appid,//appid
-    openid: ''//openid
+    openid: '',//openid
+    is_default: 0,
+    resourceurl: resourceurl,
   },
   onLoad: function (options) {
     app.getUserInfo((userInfo, open_id) => {
@@ -35,7 +38,8 @@ Page({
               province: res.data.res_content.province,
               city: res.data.res_content.city,
               district: res.data.res_content.district,
-              region: [res.data.res_content.province, res.data.res_content.city, res.data.res_content.district]
+              region: [res.data.res_content.province, res.data.res_content.city, res.data.res_content.district],
+              is_default: res.data.res_content.is_default
             })
           } else {
             this.selectComponent("#Toast").showToast(res.data.res_message);
@@ -53,6 +57,18 @@ Page({
       city: e.detail.value[1],
       district: e.detail.value[2],
     })
+  },
+  // 切换
+  radioChange() {
+    if (this.data.is_default == 1) {
+      this.setData({
+        is_default: 0
+      })
+    } else {
+      this.setData({
+        is_default: 1
+      })
+    }
   },
   formBindsubmit: function (e) {
     var receiver_name = e.detail.value.receiver_name;
@@ -90,7 +106,7 @@ Page({
       mask: true,
     })
     var formData = e.detail.value;
-    formData.is_default = this.data.address.is_default;
+    formData.is_default = this.data.is_default;
 
     network.POST('CustomerAddress/ReviseAddress', formData,
       (res) => {
